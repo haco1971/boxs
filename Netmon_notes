@@ -1,0 +1,118 @@
+NETMON 10.10.10.152
+Windows
+_______________________________________________________________________________________________
+NMAP
+_______________________________________________________________________________________________
+-sS
+
+Not shown: 995 closed ports
+PORT    STATE SERVICE
+21/tcp  open  ftp
+80/tcp  open  http
+135/tcp open  msrpc
+139/tcp open  netbios-ssn
+445/tcp open  microsoft-ds
+
+-sV
+
+Not shown: 995 closed ports
+PORT    STATE SERVICE      VERSION
+21/tcp  open  ftp          Microsoft ftpd
+80/tcp  open  http         Indy httpd 18.1.37.13946 (Paessler PRTG bandwidth monitor)
+135/tcp open  msrpc        Microsoft Windows RPC
+139/tcp open  netbios-ssn  Microsoft Windows netbios-ssn
+445/tcp open  microsoft-ds Microsoft Windows Server 2008 R2 - 2012 microsoft-ds
+Service Info: OSs: Windows, Windows Server 2008 R2 - 2012; CPE: cpe:/o:microsoft:windows
+
+-sV -T5 -p-
+
+PORT      STATE SERVICE      VERSION
+21/tcp    open  ftp          Microsoft ftpd
+80/tcp    open  http         Indy httpd 18.1.37.13946 (Paessler PRTG bandwidth monitor)
+135/tcp   open  msrpc        Microsoft Windows RPC
+139/tcp   open  netbios-ssn  Microsoft Windows netbios-ssn
+445/tcp   open  microsoft-ds Microsoft Windows Server 2008 R2 - 2012 microsoft-ds
+5985/tcp  open  http         Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+47001/tcp open  http         Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+49664/tcp open  msrpc        Microsoft Windows RPC
+49665/tcp open  msrpc        Microsoft Windows RPC
+49666/tcp open  msrpc        Microsoft Windows RPC
+49675/tcp open  msrpc        Microsoft Windows RPC
+49678/tcp open  msrpc        Microsoft Windows RPC
+49679/tcp open  msrpc        Microsoft Windows RPC
+______________________________________________________________________________________________
+:21 FTP
+______________________________________________________________________________________________
+Anonymous login allowed
+
+ftp> ls
+200 PORT command successful.
+125 Data connection already open; Transfer starting.
+02-03-19  12:18AM                 1024 .rnd
+02-25-19  10:15PM       <DIR>          inetpub
+07-16-16  09:18AM       <DIR>          PerfLogs
+02-25-19  10:56PM       <DIR>          Program Files
+02-03-19  12:28AM       <DIR>          Program Files (x86)
+02-03-19  08:08AM       <DIR>          Users
+02-25-19  11:49PM       <DIR>          Windows
+
+ls /Users/Public --> user.txt
+
+user.txt
+dd58ce67b49e15105e88096c8d9255a5
+______________________________________________________________________________________________
+:80 HTTP
+______________________________________________________________________________________________
+msf dir_scanner
+
+[*] Detecting error code
+[*] Using code '302' as not found for 10.10.10.152
+[+] Found http://10.10.10.152:80/api/ 302 (10.10.10.152)
+[+] Found http://10.10.10.152:80/controls/ 302 (10.10.10.152)
+[+] Found http://10.10.10.152:80/help/ 302 (10.10.10.152)
+[+] Found http://10.10.10.152:80/icons/ 302 (10.10.10.152)
+[+] Found http://10.10.10.152:80/images/ 302 (10.10.10.152)
+[+] Found http://10.10.10.152:80/javascript/ 302 (10.10.10.152)
+[*] Scanned 1 of 1 hosts (100% complete)
+[*] Auxiliary module execution completed
+
+msf files_dir
+
+[+] Found http://10.10.10.152:80/error.htm 200
+[+] Found http://10.10.10.152:80/index.htm 200
+
+______________________________________________________________________________________________
+FTP Enum
+______________________________________________________________________________________________
+cd ProgramData
+grep prtgadmin -r ./*
+"prtgadmin" -> default admin name on PRTG
+
+Found "PRTG Configuration.old.bak"
+    "
+        <dbpassword>
+	      <!-- User: prtgadmin -->
+	      PrTg@dmin2018
+            </dbpassword>
+    "
+
+______________________________________________________________________________________________
+HTTP Login
+______________________________________________________________________________________________
+http://10.10.10.152
+
+prtgadmin:PrTg@dmin2018  -->> INCORRECT
+prtgadmin:PrTg@dmin2019  -->> CORRECT!
+
+______________________________________________________________________________________________
+Using:
+https://www.codewatch.org/blog/?p=453
+
+Notofication --> Execute Program --> Demo outfile.ps1
+                 \/  \/  \/
+                 Parameter:
+
+    -- 
+
+root.txt
+
